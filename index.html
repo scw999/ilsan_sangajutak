@@ -82,7 +82,7 @@ svg text{font-family:'Pretendard','Noto Sans KR',sans-serif}
     <tr><td>1F</td><td>상가(~80m² 24평, 동+남 코너전면) + 코어(~23m² NW) + 필로티1대</td></tr>
     <tr><td>2~3F</td><td>각 2세대 투룸 (발코니확장) — 1F와 동일면적, 사선 미적용</td></tr>
     <tr><td>4F</td><td>소유주 (2실+2욕+LDK+다용도실) + 북측테라스</td></tr>
-    <tr><td>다락</td><td>소유주확장 (3실+2욕+거실) + NW테라스 — 직하층 50%미만</td></tr>
+    <tr><td>다락</td><td>소유주확장 (3실+2욕+거실) + NW테라스 — 전폭배치·코어직결·직하층50%미만</td></tr>
     <tr><td>주차</td><td>옥외4대(횡배치2×2, 동측전진) + 필로티1대 = 5대</td></tr>
   </table>
 </div></div>
@@ -154,7 +154,7 @@ svg text{font-family:'Pretendard','Noto Sans KR',sans-serif}
     <tr><th>항목</th><th>기준</th><th>계획</th><th>판정</th></tr>
     <tr><td>건폐율</td><td>≤60%</td><td id="lv-bcr"></td><td class="c ok">OK</td></tr>
     <tr><td>용적률</td><td>≤180%</td><td id="lv-far"></td><td class="c ok">OK</td></tr>
-    <tr><td>정북일조</td><td>H≤9:1.5m H>9:H/2</td><td>1~3F:5.2m≥1.5m, 4F:7.0m≥6.3m, 다락:10.6m≥7.8m</td><td class="c ok">OK</td></tr>
+    <tr><td>정북일조</td><td>H≤9:1.5m H>9:H/2</td><td>1~3F:5.2m≥1.5m, 4F:7.0m≥6.3m, 다락:12.6m≥8.0m</td><td class="c ok">OK</td></tr>
     <tr><td>주차</td><td>5대</td><td>옥외4(횡2×2)+필로티1=5</td><td class="c ok">OK</td></tr>
     <tr><td>다락</td><td>&lt;50%</td><td id="lv-at"></td><td class="c ok">OK</td></tr>
   </table>
@@ -189,7 +189,7 @@ svg text{font-family:'Pretendard','Noto Sans KR',sans-serif}
     <tr><td class="c b">2F</td><td>A호(북측투룸48m²)+B호(남측투룸47m²)+코어+발코니</td><td>1F동일면적, 사선미적용</td></tr>
     <tr><td class="c b">3F</td><td>C호+D호 — 2F와 동일</td><td>H=9m, 사선미적용</td></tr>
     <tr><td class="c b">4F</td><td>소유주88m²(방2+욕2+LDK+다용도실)+북측테라스21m²</td><td>H>9m 정북후퇴→테라스</td></tr>
-    <tr><td class="c b">다락</td><td>소유주확장44m²(방3+욕2+거실)+NW테라스67m²</td><td>SE최대배치, 직하층49%</td></tr>
+    <tr><td class="c b">다락</td><td>소유주확장44m²(방3+욕2+거실)+NW테라스</td><td>전폭배치·코어직결, 직하층&lt;50%</td></tr>
   </table>
 </div></div>
 
@@ -206,7 +206,7 @@ var BLD={
   '2F':[[0.5,5.2],[12.3,5.2],[12.3,14.9],[9.7,17.5],[0.5,17.5]],
   '3F':[[0.5,5.2],[12.3,5.2],[12.3,14.9],[9.7,17.5],[0.5,17.5]],
   '4F':[[0.5,7.0],[12.3,7.0],[12.3,14.9],[9.7,17.5],[0.5,17.5]],
-  'AT':[[4.0,10.6],[12.3,10.6],[12.3,14.9],[9.7,17.5],[4.0,17.5]]
+  'AT':[[0.5,12.6],[12.3,12.6],[12.3,14.9],[9.7,17.5],[0.5,17.5]]
 };
 var PILOTI_Y=8.0;
 var BALCONY={'2F':24,'3F':24,'4F':10};
@@ -269,7 +269,8 @@ document.getElementById('at-terr-py').textContent=(atTerr/3.305).toFixed(1);
 function tx(x){return PAD+x*S}
 function ty(y){return PAD+y*S}
 function pts(a){var r='';for(var i=0;i<a.length;i++){if(i)r+=' ';r+=tx(a[i][0])+','+ty(a[i][1])}return r}
-function mk(){var s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 '+(PAD*2+15*S)+' '+(PAD*2+21*S));s.setAttribute('width','100%');s.style.maxWidth=(PAD*2+15*S)+'px';return s}
+var SVG_W=PAD*2+15*S+220;
+function mk(){var s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 '+SVG_W+' '+(PAD*2+21*S));s.setAttribute('width','100%');s.style.maxWidth=SVG_W+'px';return s}
 function pg(s,v,f,o,sk,sw,d){var p=document.createElementNS(NS,'polygon');p.setAttribute('points',pts(v));if(f)p.setAttribute('fill',f);if(o)p.setAttribute('opacity',o);if(sk){p.setAttribute('stroke',sk);p.setAttribute('stroke-width',sw||1.5)}if(d)p.setAttribute('stroke-dasharray',d);s.appendChild(p)}
 function rt(s,x,y,w,h,f,o,sk,sw){var r=document.createElementNS(NS,'rect');r.setAttribute('x',tx(x));r.setAttribute('y',ty(y));r.setAttribute('width',w*S);r.setAttribute('height',h*S);r.setAttribute('fill',f);r.setAttribute('opacity',o||.3);if(sk){r.setAttribute('stroke',sk);r.setAttribute('stroke-width',sw||1)}s.appendChild(r)}
 function ln(s,a,b,c,d,col,da){var l=document.createElementNS(NS,'line');l.setAttribute('x1',tx(a));l.setAttribute('y1',ty(b));l.setAttribute('x2',tx(c));l.setAttribute('y2',ty(d));l.setAttribute('stroke',col||'#475569');l.setAttribute('stroke-width','1');if(da)l.setAttribute('stroke-dasharray',da);s.appendChild(l)}
@@ -284,6 +285,25 @@ function base(s){
   tt(s,tx(6.8),ty(-0.5),'13.58m','#4a6fa5',7);
   tt(s,tx(14.3),ty(8),'15.47m','#4a6fa5',7,-90);
   tt(s,tx(-0.3),ty(9.5),'19.0m','#4a6fa5',7,-90);
+}
+
+/* ==================== SIDE TABLE ==================== */
+var TBL_X=PAD*2+15*S+12;
+function addSide(s,title,lines){
+  var y0=PAD+10;
+  var e=document.createElementNS(NS,'text');e.setAttribute('x',TBL_X);e.setAttribute('y',y0);
+  e.setAttribute('fill','#60a5fa');e.setAttribute('font-size','13px');e.setAttribute('font-weight','700');
+  e.textContent=title;s.appendChild(e);
+  for(var i=0;i<lines.length;i++){
+    var li=lines[i];var yt=y0+20+i*18;
+    var isHead=li.charAt(0)==='▸';
+    var txt=document.createElementNS(NS,'text');
+    txt.setAttribute('x',isHead?TBL_X:TBL_X+8);txt.setAttribute('y',yt);
+    txt.setAttribute('fill',isHead?'#93c5fd':'#cdd6e4');
+    txt.setAttribute('font-size',isHead?'11px':'10px');
+    if(isHead)txt.setAttribute('font-weight','600');
+    txt.textContent=li;s.appendChild(txt);
+  }
 }
 
 /* ==================== 1F ==================== */
@@ -308,7 +328,7 @@ function r1F(){
   /* 진입 */
   tt(s,tx(13.5),ty(2.0),'←','#fbbf24',16);
   tt(s,tx(13.5),ty(3.5),'동측도로','#fbbf24',7);
-  tt(s,tx(8.0),ty(-0.3),'횡배치 2×2 옥외주차 (동측전진)','#fb923c',9);
+  tt(s,tx(8.0),ty(-0.8),'횡배치 2×2 옥외주차 (동측전진)','#fb923c',8);
 
   /* 필로티 */
   rt(s,0.5,5.2,11.8,PILOTI_Y-5.2,'#fb923c',0.08);
@@ -331,7 +351,7 @@ function r1F(){
   tt(s,tx(7.9),ty(12.8),'상 가','#4ade80',18);
   tt(s,tx(7.9),ty(14.2),'~'+shopArea+'m² ('+Math.round(shopArea/3.305)+'평)','#4ade80',10);
   tt(s,tx(7.9),ty(15.3),'동+남 코너 전면','#4ade80',9);
-  tt(s,tx(7.5),ty(8.8),'후면/서비스','#4ade80',8);
+  tt(s,tx(7.5),ty(9.5),'후면/서비스','#4ade80',8);
   /* 상가입구: SE코너 */
   tt(s,tx(11.0),ty(16.0),'입구','#4ade80',10);
   tt(s,tx(11.8),ty(16.8),'↗','#4ade80',14);
@@ -341,8 +361,31 @@ function r1F(){
   rt(s,0.5,15.7,3.0,1.8,'#475569',0.15);
   tt(s,tx(2.0),ty(16.6),'설비','#6b7fa8',8);
 
-  tt(s,tx(6.4),ty(-2.8),'1F 배치','#fff',14);
-  tt(s,tx(6.4),ty(-1.8),'건축면적'+A['1F']+'m² | 상가'+shopArea+'m²('+Math.round(shopArea/3.305)+'평) | 코어23m²(7평)','#93c5fd',8);
+  tt(s,tx(6.4),ty(-2.5),'1F 배치','#fff',14);
+
+  addSide(s,'1F 면적표',[
+    '▸ 건물면적',
+    '  '+A['1F']+'m² ('+Math.round(A['1F']/3.305)+'평)',
+    '▸ 필로티 (FAR제외)',
+    '  '+piloti+'m² ('+Math.round(piloti/3.305)+'평)',
+    '▸ 바닥면적 (FAR산입)',
+    '  '+f1ba+'m² ('+Math.round(f1ba/3.305)+'평)',
+    '',
+    '▸ 상가 (동+남 코너)',
+    '  '+shopArea+'m² ('+Math.round(shopArea/3.305)+'평)',
+    '  전면매장 65m²',
+    '  후면/창고 15m²',
+    '▸ 코어 (NW내측)',
+    '  23m² (EV+계단+입구)',
+    '▸ 설비/벽체',
+    '  6m²',
+    '',
+    '▸ 옥외주차',
+    '  횡배치 2×2 = 4대',
+    '  동측도로 전진배치',
+    '▸ 필로티주차',
+    '  1대 (P5)'
+  ]);
   return s;
 }
 
@@ -387,9 +430,30 @@ function r2F(floor){
   tt(s,tx(6.5),ty(17.7),'(1.5m, FAR미산입)','#fbbf24',7);
 
   var ffa=A[fl]-BALCONY[fl];
-  tt(s,tx(6.4),ty(-2.8),fl+' 평면','#fff',14);
-  tt(s,tx(6.4),ty(-1.8),'건물'+A[fl]+'m²(=1F동일)|발코니'+BALCONY[fl]+'제외→FAR'+ffa+'m²','#93c5fd',8);
-  if(fl==='3F') tt(s,tx(6.4),ty(-0.8),'H≤9m → 정북사선 미적용 (1F와 동일면적)','#4ade80',8);
+  tt(s,tx(6.4),ty(-2.5),fl+' 평면','#fff',14);
+
+  var aLbl=fl==='2F'?'A':'C', bLbl=fl==='2F'?'B':'D';
+  addSide(s,fl+' 면적표',[
+    '▸ 건물면적',
+    '  '+A[fl]+'m² (=1F동일)',
+    '▸ 발코니확장 (FAR제외)',
+    '  '+BALCONY[fl]+'m² (1.5m이내)',
+    '▸ FAR산입 면적',
+    '  '+ffa+'m²',
+    '',
+    '▸ '+aLbl+'호 (북측 투룸)',
+    '  전용 48m² (14.5평)',
+    '  방1 10m² / 방2 8m²',
+    '  욕실 4m² / LDK 20m²',
+    '  현관·복도 6m²',
+    '▸ '+bLbl+'호 (남측 투룸)',
+    '  전용 47m² (14.2평)',
+    '  방1/방2/욕실/LDK/복도',
+    '▸ 코어+벽체',
+    '  23m² + 벽체 포함',
+    '',
+    fl==='3F'?'▸ H≤9m 사선미적용':'▸ 2개세대 남북분리'
+  ]);
   return s;
 }
 
@@ -397,16 +461,15 @@ function r2F(floor){
 function r4F(){
   var s=mk();base(s);
   pg(s,BLD['2F'],'none',1,'#1e3a5f',1,'4,3');
-  tt(s,tx(9.5),ty(5.8),'(2~3F)','#334155',7);
   pg(s,BLD['4F'],'none',1,'#3b82f6',2);
-
-  ln(s,0,7.0,13.58,7.0,'#f87171','5,3');
-  tt(s,tx(6.8),ty(6.3),'H>9m 후퇴선 (H=12.6m→필요6.3m, 실제7.0m)','#f87171',8);
 
   /* 북측 테라스 */
   pg(s,[[0.5,5.2],[12.3,5.2],[12.3,7.0],[0.5,7.0]],'#fbbf24',0.25);
-  tt(s,tx(6.4),ty(5.7),'북측 테라스','#fbbf24',10);
-  tt(s,tx(6.4),ty(6.5),'~21m² (2~3F 지붕)','#fbbf24',8);
+  tt(s,tx(6.4),ty(5.6),'북측 테라스 ~21m²','#fbbf24',9);
+  tt(s,tx(10.0),ty(5.6),'(2~3F지붕)','#334155',7);
+
+  ln(s,0,7.0,13.58,7.0,'#f87171','5,3');
+  tt(s,tx(6.8),ty(6.5),'후퇴선 H=12.6m→6.3m필요, 7.0m확보','#f87171',7);
 
   /* 코어 NW */
   rt(s,0.5,PILOTI_Y,CORE_W,CORE_H,'#c084fc',0.3,'#c084fc',0.5);
@@ -435,8 +498,31 @@ function r4F(){
   tt(s,tx(6.5),ty(17.0),'발코니 10m²','#fbbf24',8);
 
   var ffa=A['4F']-BALCONY['4F'];
-  tt(s,tx(6.4),ty(-2.8),'4F 소유주','#fff',14);
-  tt(s,tx(6.4),ty(-1.8),'건물'+A['4F']+'m²|FAR'+ffa+'m²|전용88m²|북측테라스21m²','#93c5fd',8);
+  tt(s,tx(6.4),ty(-2.5),'4F 소유주','#fff',14);
+
+  var terr4=A['1F']-A['4F'];
+  addSide(s,'4F 면적표',[
+    '▸ 건물면적',
+    '  '+A['4F']+'m² ('+Math.round(A['4F']/3.305)+'평)',
+    '▸ 발코니확장 (FAR제외)',
+    '  '+BALCONY['4F']+'m²',
+    '▸ FAR산입 면적',
+    '  '+ffa+'m²',
+    '',
+    '▸ 소유주 전용',
+    '  88m² (26.6평)',
+    '  안방+드레스룸 16m²',
+    '  욕실1(안방전용) 5m²',
+    '  방2 10m² / 욕실2 4m²',
+    '  LDK 32m² (거실+식당+주방)',
+    '  다용도실 8m² (현관직결)',
+    '  현관·복도 13m²',
+    '▸ 코어+벽체',
+    '  23m² + 발코니10m²',
+    '',
+    '▸ 북측 테라스',
+    '  ~'+terr4+'m² (2~3F 지붕활용)'
+  ]);
   return s;
 }
 
@@ -446,36 +532,62 @@ function rAT(){
   pg(s,BLD['4F'],'none',1,'#1e3a5f',1,'4,3');
   tt(s,tx(1.5),ty(7.5),'(4F)','#334155',7);
 
-  /* NW 테라스 (L자) */
-  pg(s,BLD['4F'],'#fbbf24',0.15);
+  /* 4F지붕 = 다락 테라스 영역 */
+  pg(s,BLD['4F'],'#fbbf24',0.12);
+  /* 다락 본체 (전폭) */
   pg(s,BLD['AT'],'#f87171',0.2,'#3b82f6',2);
 
-  tt(s,tx(2.5),ty(8.5),'NW','#fbbf24',12);
-  tt(s,tx(2.5),ty(9.5),'테라스','#fbbf24',12);
-  tt(s,tx(2.5),ty(10.5),atTerr+'m²','#fbbf24',9);
-  tt(s,tx(8.0),ty(7.8),'테라스','#fbbf24',9);
-  tt(s,tx(8.0),ty(8.5),'(4F 지붕)','#fbbf24',8);
+  /* 북측 테라스 (4F지붕 중 다락 바깥) */
+  pg(s,[[0.5,7.0],[12.3,7.0],[12.3,12.6],[0.5,12.6]],'#fbbf24',0.2);
+  tt(s,tx(6.4),ty(9.0),'NW 테라스','#fbbf24',13);
+  tt(s,tx(6.4),ty(10.0),atTerr+'m² (4F지붕 활용)','#fbbf24',9);
 
-  /* 코어접속 */
-  rt(s,4.0,10.6,CORE_W,3.5,'#c084fc',0.2);
-  tt(s,tx(5.5),ty(12.0),'코어','#c084fc',8);
-  tt(s,tx(5.5),ty(12.8),'접속','#c084fc',7);
+  /* 코어 NW (계단연결) */
+  rt(s,0.5,12.6,CORE_W,CORE_H-(12.6-PILOTI_Y),'#c084fc',0.3,'#c084fc',0.5);
+  tt(s,tx(2.0),ty(13.8),'코어','#c084fc',10);
+  tt(s,tx(2.0),ty(14.6),'계단↑','#c084fc',8);
 
-  /* 방배치 SE */
-  ln(s,7.0,10.6,7.0,14.0,'#334155','3,2');
-  ln(s,9.5,10.6,9.5,14.0,'#334155','3,2');
-  tt(s,tx(5.8),ty(11.3),'방1','#f87171',10);
-  tt(s,tx(8.2),ty(11.3),'방2','#f87171',10);
-  tt(s,tx(10.8),ty(11.3),'방3','#f87171',10);
+  /* 방배치: 코어 동측으로 3방 배치 */
+  ln(s,3.5,12.6,3.5,15.0,'#334155','3,2');
+  ln(s,6.0,12.6,6.0,15.0,'#334155','3,2');
+  ln(s,8.5,12.6,8.5,15.0,'#334155','3,2');
+  tt(s,tx(4.75),ty(13.5),'방1','#f87171',10);
+  tt(s,tx(7.25),ty(13.5),'방2','#f87171',10);
+  tt(s,tx(10.0),ty(13.5),'방3','#f87171',10);
 
-  ln(s,4.0,14.0,12.3,14.0,'#334155','3,2');
-  tt(s,tx(5.5),ty(14.8),'욕1','#cdd6e4',9);
-  tt(s,tx(7.5),ty(14.8),'욕2','#cdd6e4',9);
-  tt(s,tx(8.5),ty(16.0),'거실/홀','#f87171',11);
+  /* 하단: 욕실 + 거실 */
+  ln(s,0.5,15.0,12.3,15.0,'#334155','3,2');
+  rt(s,0.5,15.0,2.5,2.5,'#cdd6e4',0.08);
+  tt(s,tx(1.75),ty(15.8),'욕1','#cdd6e4',9);
+  rt(s,3.0,15.0,2.5,2.5,'#cdd6e4',0.08);
+  tt(s,tx(4.25),ty(15.8),'욕2','#cdd6e4',9);
+  tt(s,tx(8.5),ty(16.5),'거실/홀','#f87171',12);
 
   var ratio=Math.round(A['AT']/getFa4()*100);
-  tt(s,tx(6.4),ty(-2.8),'다락 (SE최대배치)','#fff',14);
-  tt(s,tx(6.4),ty(-1.8),A['AT']+'m²(4F의'+ratio+'%)|용적률미산입|NW테라스'+atTerr+'m²','#93c5fd',8);
+  tt(s,tx(6.4),ty(-2.5),'다락 (전폭배치·코어직결)','#fff',14);
+
+  addSide(s,'다락 면적표',[
+    '▸ 건물면적',
+    '  '+A['AT']+'m² ('+Math.round(A['AT']/3.305)+'평)',
+    '▸ 4F대비 비율',
+    '  '+ratio+'% (<50% → 미산입)',
+    '▸ 용적률',
+    '  미산입 (다락 제외)',
+    '',
+    '▸ 소유주확장 전용',
+    '  ~44m² (13.3평)',
+    '  방1 9m² / 방2 8m²',
+    '  방3 8m²',
+    '  욕실1+2 8m²',
+    '  거실/홀 11m²',
+    '▸ 코어접속+벽체',
+    '  ~10m²',
+    '',
+    '▸ NW 테라스',
+    '  ~'+atTerr+'m² (4F지붕)',
+    '▸ 코어 직결',
+    '  4F계단→다락 연결 ✓'
+  ]);
   return s;
 }
 
@@ -503,7 +615,7 @@ function rSec(){
     {l:'2F',h0:3.6,h1:6.6,n:5.2,e:17.5},
     {l:'3F',h0:6.6,h1:9.6,n:5.2,e:17.5},
     {l:'4F',h0:9.6,h1:12.6,n:7.0,e:17.5},
-    {l:'다락',h0:12.6,h1:16,n:10.6,e:17.5}
+    {l:'다락',h0:12.6,h1:16,n:12.6,e:17.5}
   ];
   for(var i=0;i<fl.length;i++){
     var f=fl[i];
@@ -521,11 +633,11 @@ function rSec(){
   t1.setAttribute('fill','#fbbf24');t1.setAttribute('opacity','0.25');s.appendChild(t1);
   sTx(sx(6.1),sy(11.3),'4F 테라스','#fbbf24',8);
 
-  /* 다락 NW 테라스 */
+  /* 다락 NW 테라스 (4F지붕 위) */
   var t2=document.createElementNS(NS,'rect');
-  t2.setAttribute('x',sx(7.0));t2.setAttribute('y',sy(16));t2.setAttribute('width',(10.6-7.0)*sc);t2.setAttribute('height',3.4*sc);
+  t2.setAttribute('x',sx(7.0));t2.setAttribute('y',sy(16));t2.setAttribute('width',(12.6-7.0)*sc);t2.setAttribute('height',3.4*sc);
   t2.setAttribute('fill','#fbbf24');t2.setAttribute('opacity','0.25');s.appendChild(t2);
-  sTx(sx(8.8),sy(14.5),'다락NW테라스','#fbbf24',8);
+  sTx(sx(9.8),sy(14.5),'다락NW테라스','#fbbf24',8);
 
   var hts=[0,3.6,6.6,9.6,12.6,16];
   for(var i=0;i<hts.length;i++){var h=hts[i];sLn(18,h,19,h,'#334155');sTx(sx(20),sy(h)+4,h+'m','#6b7fa8',9)}
@@ -533,8 +645,8 @@ function rSec(){
   sTx(sx(0.75),sy(-1),'1.5m','#93c5fd',8);
   sTx(sx(5.2),sy(1.5),'5.2m','#93c5fd',8);
   sTx(sx(7.0),sy(11),'7.0m','#93c5fd',8);
-  sTx(sx(10.6),sy(14.5),'10.6m','#93c5fd',8);
-  sTx(300,16,'정북사선 단면 — 1~3F 동일면적, 4F부터 후퇴, 다락SE배치','#fff',12);
+  sTx(sx(12.6),sy(14.5),'12.6m','#93c5fd',8);
+  sTx(300,16,'정북사선 단면 — 1~3F 동일면적, 4F후퇴, 다락전폭(y=12.6~)','#fff',12);
   return s;
 }
 
